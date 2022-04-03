@@ -10,14 +10,15 @@ import { ReactComponent as PhoneSvg } from "./components/assets/phone.svg"
 function App() {
 
   const [user, setUser] = useState([])
-
+console.log(user);
   const fetchRandomUser = () => {
-    axios.get("https://randomuser.me/api/").then((res) => {
-      setUser(res.data.results[0])
+ axios("https://randomuser.me/api/").then((res) => {
+   
+      setUser(res.data.results)
+ 
 
-    }).catch((err) => {
-      console.log(err);
     })
+ 
     console.log(user);
   }
 
@@ -30,44 +31,45 @@ function App() {
     fetchRandomUser()
   }
 
-  console.log(user);
+  console.log(user.length);
 
 
 
 
 
   return (
-    <div className="App">
 
-      <div className='box'>
+ <div className="App">
+ 
+   {user.length >0 && (  <div className='box'>
         <div className='same-style'>
-          <img src={user.picture.medium} alt="" style={{borderRadius:"50%"}} />
-          <h5>{user.name.title} {user.name.first} {user.name.last}</h5>
+          <img src={user[0].picture.medium} alt="" style={{borderRadius:"50%"}} />
+          <h5>{user[0].name.title} {user[0].name.first} {user[0].name.last}</h5>
         </div>
         <div className='same-style'>
           <span className='email-svg'>
 
             <EmailSvg />
           </span>
-          <p>{user.email}</p>
+          <p>{user[0].email}</p>
         </div>
         <div className='same-style'>
           <span className='phone-svg'>
             <PhoneSvg  />
           </span>
-          <p>{user.phone}</p>
+          <p>{user[0].phone}</p>
         </div>
         <div className='same-style'>
           <span className='location-svg'>
             <LocationSvg  />
           </span>
-          <p>{user.location.city} {user.location.country}</p>
+          <p>{user[0].location.city} {user[0].location.country}</p>
         </div>
-        <p>Age:{user.dob.age}</p>
-        <p>Register Date:{user.dob.date.split("T")[0]}</p>
-      </div>
-      <div> 
+        <p>Age:{user[0].dob.age}</p>
+        <p>Register Date:{user[0].dob.date.split("T")[0]}</p>
+      </div> )}
 
+      <div> 
         <button className='btn btn-primary mt-3' onClick={handleClick} >Random User</button>
       </div>
 
